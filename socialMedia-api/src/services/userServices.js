@@ -17,6 +17,22 @@ class UserServices {
 
         return updatedUser
     }
+
+    async deleteUser(userId){
+        const deletedUser = await User.findByIdAndDelete({ _id: userId})
+
+        if(!deletedUser) throw new CustomError('User does not exist', 404)
+
+        return deletedUser
+    }
+
+    async getUser(userId){
+        const user = await User.findById({_id: userId})
+        if (!user) throw new CustomError('User not found!', 404)
+
+        return user
+    }
+
 }
 
 module.exports = new UserServices()

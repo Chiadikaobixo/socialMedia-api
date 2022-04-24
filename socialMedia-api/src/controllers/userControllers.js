@@ -18,8 +18,13 @@ class UserControllers {
     }
 
     async followUser(req, res){
-        const followers = await userServices.followUser(req.params.userId, req.body)
-        res.status(200).send(response('followed User', followers))
+        const follower = await userServices.followUser(req.params.userId, req.body)
+        res.status(200).send(response('followed User', follower))
+    }
+
+    async unFollowUser(req, res){
+        const unFollower = await userServices.unFollowUser(req.params.userId, req.body)
+        res.status(200).send(response('unfollowed User', unFollower))
     }
 }
 

@@ -50,6 +50,23 @@ class UserServices {
         return user
     }
 
+    async unFollowUser(userId, data){
+        const user = await User.findById({_id: userId})
+        const currentUser = await User.findById(data.userId)
+
+        if(userId === data.userId)
+        throw new CustomError('You cannot unfollow yourself', 403)
+
+        if(user.followers.includes(data.userId)){
+            await user.updateOne({ $pull: {followers: data.userId} })
+            await currentUser.updateOne({ $pull: {followings: userId} })
+        }else{
+            throw new CustomError('You are already unfollowed this user', 403)
+        }
+
+        return user
+    }
+
 }
 
 module.exports = new UserServices()

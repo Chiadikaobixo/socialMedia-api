@@ -11,4 +11,6 @@ router.get('/:userId', verifyTokenAndAuthorization, userControllers.getUser)
 
 router.put('/users/:userId/follow', verifyTokenAndAuthorization, userControllers.followUser)
 
+router.put('/users/:userId/unfollow', verifyTokenAndAuthorization, userControllers.unFollowUser)
+
 module.exports = router

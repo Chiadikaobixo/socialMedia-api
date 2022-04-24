@@ -33,6 +33,23 @@ class UserServices {
         return user
     }
 
+    async followUser(userId, data){
+        const user = await User.findById({_id: userId})
+        const currentUser = await User.findById(data.userId)
+
+        if(userId === data.userId)
+        throw new CustomError('You cannot follow yourself', 403)
+
+        if(!user.followers.includes(data.userId)){
+            await user.updateOne({ $push: {followers: data.userId} })
+            await currentUser.updateOne({ $push: {followings: userId} })
+        }else{
+            throw new CustomError('You are already following this user', 403)
+        }
+
+        return user
+    }
+
 }
 
 module.exports = new UserServices()

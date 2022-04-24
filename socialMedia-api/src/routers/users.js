@@ -9,4 +9,6 @@ router.delete('/users/:userId', verifyTokenAndAuthorization, userControllers.del
 
 router.get('/:userId', verifyTokenAndAuthorization, userControllers.getUser)
 
+router.put('/users/:userId/follow', verifyTokenAndAuthorization, userControllers.followUser)
+
 module.exports = router

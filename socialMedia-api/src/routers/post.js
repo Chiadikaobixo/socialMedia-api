@@ -7,6 +7,10 @@ router.put('/posts/:postId', postControllers.updatePost)
 
 router.delete('/posts/:postId', postControllers.deletePost)
 
-router.put('/post/:postId/like', postControllers.likePost)
+router.put('/posts/:postId/like', postControllers.likePost)
+
+router.get('/posts/:postId', postControllers.getPost)
+
+router.get('/posts/timeline/all', postControllers.timelinePost)
 
 module.exports = router

@@ -21,6 +21,16 @@ class PostControllers {
         const likedPost = await postServices.likeAndUnlikePost(req.params.postId, req.body)
         res.status(200).send(response('post has been liked', likedPost))
     }
+
+    async getPost(req, res){
+        const getPost = await postServices.getPost(req.params.postId)
+        res.status(200).send(response('Fetched post', getPost))
+    }
+
+    async timelinePost(req, res){
+        const post = await postServices.timelinePost(req.body)
+        res.status(200).send(response('Timeline Post', post))
+    }
 }
 
 module.exports = new PostControllers()

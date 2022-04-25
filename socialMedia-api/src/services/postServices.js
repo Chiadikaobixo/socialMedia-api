@@ -49,6 +49,27 @@ class PostServices {
 
         return post
     }
+
+    async getPost(postId){
+        const post = await Post.findById({_id: postId})
+
+        if(!post) throw new CustomError('Post not available')
+
+        return post
+    }
+
+    async timelinePost(data){
+        const currentUser = await User.findById(data.userId)
+        const userPost = await Post.find({ userId: currentUser._id })
+        const friendsPost = await Promise.all(
+            currentUser.followings.map((friendId) => {
+                return Post.find({ userId: friendId })
+            })
+        )
+        const timelinePost = userPost.concat(...friendsPost)
+
+        return timelinePost
+    }
 }
 
 module.exports = new PostServices()

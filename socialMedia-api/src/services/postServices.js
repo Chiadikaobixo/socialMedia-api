@@ -58,8 +58,8 @@ class PostServices {
         return post
     }
 
-    async timelinePost(data){
-        const currentUser = await User.findById(data.userId)
+    async timelinePost(userId){
+        const currentUser = await User.findById({_id: userId})
         const userPost = await Post.find({ userId: currentUser._id })
         const friendsPost = await Promise.all(
             currentUser.followings.map((friendId) => {

@@ -11,6 +11,6 @@ router.put('/posts/:postId/like', postControllers.likePost)
 
 router.get('/posts/:postId', postControllers.getPost)
 
-router.get('/posts/timeline/all', postControllers.timelinePost)
+router.get('/posts/timeline/:userId', postControllers.timelinePost)
 
 module.exports = router

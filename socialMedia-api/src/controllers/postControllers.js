@@ -28,7 +28,7 @@ class PostControllers {
     }
 
     async timelinePost(req, res){
-        const post = await postServices.timelinePost(req.body)
+        const post = await postServices.timelinePost(req.params.userId)
         res.status(200).send(response('Timeline Post', post))
     }
 }

@@ -11,6 +11,7 @@ const verifyToken = async (req, res, next) => {
             throw new Error
         }
 
+        req.token = token
         req.user = user
         next()
     } catch (e) {
@@ -20,7 +21,7 @@ const verifyToken = async (req, res, next) => {
 
 const verifyTokenAndAuthorization = (req, res, next ) => {
     verifyToken(req, res, () => {
-        if(req.user.id === req.params.userId || req.user.isAdmin) {
+        if(req.user.id === req.params.userId || req.user.isAdmin || req.user.tokens) {
             next()
         }else{
             res.status(403).send({error: 'You are not authorized'})

@@ -31,6 +31,11 @@ class PostControllers {
         const post = await postServices.timelinePost(req.params.userId)
         res.status(200).send(response('Timeline Post', post))
     }
+
+    async getProfile(req, res){
+        const profile = await postServices.getProfile(req.params.username)
+        res.status(200).send(response('Profile', profile))
+    }
 }
 
 module.exports = new PostControllers()

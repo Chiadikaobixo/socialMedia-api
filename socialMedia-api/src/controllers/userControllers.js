@@ -13,7 +13,7 @@ class UserControllers {
     }
 
     async getUser(req, res){
-        const user = await userServices.getUser(req.params.userId)
+        const user = await userServices.getUser(req.query.userId, req.query.username)
         res.status(200).send(response('fetched user', user))
     }
 

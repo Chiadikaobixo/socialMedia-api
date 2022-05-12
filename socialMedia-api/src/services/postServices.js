@@ -70,6 +70,16 @@ class PostServices {
 
         return timelinePost
     }
+
+    // get users all post
+    async getProfile(username){
+        const user = await User.findOne({username: username})
+        if(!user) throw new CustomError('User profile does not exist')
+        
+        const post = await Post.find({userId: user._id})
+
+        return post
+    }
 }
 
 module.exports = new PostServices()

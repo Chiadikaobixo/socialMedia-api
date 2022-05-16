@@ -4,7 +4,16 @@ const postRouter = require('./routers/post')
 const logoutRouter = require('./routers/logout')
 require('./db/mongoose')
 const app = require('./app')
+const cors = require('cors')
 
+
+app.use((_req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, PUT')
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    next()
+})
+app.use(cors())
 
 app.use(userRouter)
 app.use(authRouter)

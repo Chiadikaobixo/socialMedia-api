@@ -2,9 +2,11 @@ const userRouter = require('./routers/users')
 const authRouter = require('./routers/auth')
 const postRouter = require('./routers/post')
 const logoutRouter = require('./routers/logout')
+const avatarRouter = require('./avatar/avatar')
 require('./db/mongoose')
 const app = require('./app')
 const cors = require('cors')
+
 
 
 app.use((_req, res, next) => {
@@ -15,10 +17,12 @@ app.use((_req, res, next) => {
 })
 app.use(cors())
 
+
 app.use(userRouter)
 app.use(authRouter)
 app.use(postRouter)
 app.use(logoutRouter)
+app.use(avatarRouter)
 
 app.listen(8080, () => {
     console.log('backend server is running')

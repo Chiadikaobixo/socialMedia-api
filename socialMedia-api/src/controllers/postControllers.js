@@ -19,7 +19,7 @@ class PostControllers {
 
     async likePost(req, res){
         const likedPost = await postServices.likeAndUnlikePost(req.params.postId, req.body)
-        res.status(200).send(response('post has been liked', likedPost))
+        res.status(200).send(response('liked button clicked', likedPost))
     }
 
     async getPost(req, res){

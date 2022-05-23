@@ -4,23 +4,22 @@ const multer = require('multer')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "public/assets");
+        cb(null, "public/assets" );
     },
     filename: (req, file, cb) => {
-        cb(null, file.originalname);
+        cb(null, req.body.name);
     },
 });
 
 const upload = multer({ storage: storage });
-
-router.post('/users/avatar', upload.single('avatar'), async (req, res) => {
-    req.user = req.file
-    await req.user
-
-    res.status(200).send()
-}, (error, req, res, next) => {
-    res.status(400).send({ error: error.message })
-})
+router.post("/avatar", upload.single("file"), async(req, res) => {
+   
+    try {
+        return res.status(200).json("File uploded successfully");
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 
 module.exports = router

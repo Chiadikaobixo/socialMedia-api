@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(helmet())
 app.use(morgan('common'))
 
-
 app.use("/assets", express.static(path.join(__dirname, "../public/assets")));
+
 
 module.exports = app

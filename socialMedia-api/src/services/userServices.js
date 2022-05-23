@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const Post = require('../models/Post')
 const CustomError = require('../utils/customError')
 const CryptoJS = require('crypto-js')
 
@@ -20,10 +21,10 @@ class UserServices {
 
     async deleteUser(userId) {
         const deletedUser = await User.findByIdAndDelete({ _id: userId })
-
+        const deleteUserPost = await Post.deleteMany({ userId })
         if (!deletedUser) throw new CustomError('User does not exist', 404)
 
-        return deletedUser
+        return {deletedUser, deleteUserPost}
     }
 
     // fetch by query ?userId= or ?username=
@@ -34,6 +35,22 @@ class UserServices {
         if (!user) throw new CustomError('User not found!', 404)
 
         return user
+    }
+
+    async getFriends(userId){
+        const user = await User.findById(userId)
+        const friends = await Promise.all(
+            user.followings.map((friendId) => {
+                return User.findById(friendId)
+            })
+        )
+        let friendsList = []
+        friends.map((friend) => {
+            const {_id, username, profilePicture} = friend
+            friendsList.push({_id, username, profilePicture})
+        })
+        
+        return friendsList
     }
 
     async followUser(userId, data) {

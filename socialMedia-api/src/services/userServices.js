@@ -81,7 +81,7 @@ class UserServices {
             await user.updateOne({ $pull: { followers: data.userId } })
             await currentUser.updateOne({ $pull: { followings: userId } })
         } else {
-            throw new CustomError('You are already unfollowed this user', 403)
+            throw new CustomError('You already unfollowed this user', 403)
         }
 
         return user

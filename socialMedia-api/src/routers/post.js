@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const postControllers = require('../controllers/postControllers')
 
-router.post('/posts', postControllers.createUser)
+router.post('/posts', postControllers.createPost)
 
 router.put('/posts/:postId', postControllers.updatePost)
 

@@ -2,7 +2,7 @@ const postServices = require('../services/postServices')
 const response = require('../utils/response')
 
 class PostControllers {
-    async createUser(req, res){
+    async createPost(req, res){
         const createdUser = await postServices.createPost(req.body)
         res.status(201).send(response('Post Created', createdUser))
     }

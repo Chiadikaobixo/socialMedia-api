@@ -24,6 +24,14 @@ class ConversationServices {
 
         return conversation
     }
+
+    async getTwoUserIdConversation(firstUserId, secondUserId){
+        const conversation = await Conversation.findOne({
+            members: {$all: [firstUserId, secondUserId]}
+        })
+
+        return conversation
+    }
 }
 
 module.exports = new ConversationServices()

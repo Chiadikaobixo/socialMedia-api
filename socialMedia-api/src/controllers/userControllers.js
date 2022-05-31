@@ -17,9 +17,19 @@ class UserControllers {
         res.status(200).send(response('fetched user', user))
     }
 
+    async getAllUser(req, res){
+        const allUsers = await userServices.getAllUsers()
+        res.status(200).send(response('all user', allUsers))
+    }
+
     async getFriends(req, res){
         const friends = await userServices.getFriends(req.params.userId)
         res.status(200).send(response('friendList', friends))
+    }
+
+    async getFollowers(req, res){
+        const followers = await userServices.getFollowers(req.params.userId)
+        res.status(200).send(response('followers', followers))
     }
 
     async followUser(req, res){

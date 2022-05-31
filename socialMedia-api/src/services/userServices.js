@@ -24,7 +24,7 @@ class UserServices {
         const deleteUserPost = await Post.deleteMany({ userId })
         if (!deletedUser) throw new CustomError('User does not exist', 404)
 
-        return {deletedUser, deleteUserPost}
+        return { deletedUser, deleteUserPost }
     }
 
     // fetch by query ?userId= or ?username=
@@ -37,7 +37,18 @@ class UserServices {
         return user
     }
 
-    async getFriends(userId){
+    async getAllUsers() {
+        const allUsers = await User.find()
+        let allUsersList = []
+        allUsers.map((user) => {
+            const { _id, username, profilePicture } = user
+            allUsersList.push({ _id, username, profilePicture })
+        })
+
+        return allUsersList
+    }
+
+    async getFriends(userId) {
         const user = await User.findById(userId)
         const friends = await Promise.all(
             user.followings.map((friendId) => {
@@ -46,11 +57,27 @@ class UserServices {
         )
         let friendsList = []
         friends.map((friend) => {
-            const {_id, username, profilePicture} = friend
-            friendsList.push({_id, username, profilePicture})
+            const { _id, username, profilePicture } = friend
+            friendsList.push({ _id, username, profilePicture })
         })
-        
+
         return friendsList
+    }
+
+    async getFollowers(userId) {
+        const user = await User.findById(userId)
+        const followers = await Promise.all(
+            user.followers.map((followerId) => {
+                return User.findById(followerId)
+            })
+        )
+        let followersList = []
+        followers.map((followers) => {
+            const { _id, username, profilePicture } = followers
+            followersList.push({ _id, username, profilePicture })
+        })
+
+        return followersList
     }
 
     async followUser(userId, data) {

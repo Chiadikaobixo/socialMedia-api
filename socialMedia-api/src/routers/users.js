@@ -9,7 +9,11 @@ router.delete('/users/:userId', verifyTokenAndAuthorization, userControllers.del
 
 router.get('/', verifyTokenAndAuthorization, userControllers.getUser)
 
+router.get('/allusers', verifyTokenAndAuthorization, userControllers.getAllUser)
+
 router.get('/friends/:userId', verifyTokenAndAuthorization, userControllers.getFriends)
+
+router.get('/followers/:userId', verifyTokenAndAuthorization, userControllers.getFollowers)
 
 router.put('/users/:userId/follow', verifyTokenAndAuthorization, userControllers.followUser)
 

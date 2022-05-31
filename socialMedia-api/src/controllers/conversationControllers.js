@@ -11,6 +11,12 @@ class ConversationControllers {
         const conversation = await conversationServices.getConversation(req.params.userId)
         res.status(200).send(response('fetched Conversation', conversation))
     }
+
+    async getTwoUserIdConversation(req, res){
+        const twoUserConversation = await 
+        conversationServices.getTwoUserIdConversation(req.params.firstUserId, req.params.secondUserId)
+        res.status(200).send(response('fetched', twoUserConversation))
+    }
 }
 
 module.exports = new ConversationControllers()

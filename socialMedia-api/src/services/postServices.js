@@ -31,8 +31,6 @@ class PostServices {
         const dataId = await Post.findOne({userId: data.userId})
         if(!post || !dataId) throw new CustomError('You can only delete your post')
        
-        console.log(post)
-        console.log(dataId)
         if(post.userId === data.userId){
              post.deleteOne()
         }

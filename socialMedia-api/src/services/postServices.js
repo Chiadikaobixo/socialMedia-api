@@ -16,50 +16,50 @@ class PostServices {
 
     async updatePost(postId, data) {
         const updatePost = await Post.findById({ _id: postId })
-        const dataId = await Post.findOne({userId: data.userId})
-        if(!updatePost || !dataId) throw new CustomError('You can update only your post')
-       
-        if(updatePost.userId === data.userId){
-            await updatePost.updateOne({ $set: data}, {new: true})
+        const dataId = await Post.findOne({ userId: data.userId })
+        if (!updatePost || !dataId) throw new CustomError('You can update only your post')
+
+        if (updatePost.userId === data.userId) {
+            await updatePost.updateOne({ $set: data }, { new: true })
         }
 
         return updatePost
     }
 
     async deletePost(postId, data) {
-        const post = await Post.findById({ _id: postId})
-        const dataId = await Post.findOne({userId: data.userId})
-        if(!post || !dataId) throw new CustomError('You can only delete your post')
-       
-        if(post.userId === data.userId){
-             post.deleteOne()
+        const post = await Post.findById({ _id: postId })
+        const dataId = await Post.findOne({ userId: data.userId })
+        if (!post || !dataId) throw new CustomError('you dont have the necessary credentials')
+
+        if (post.userId === data.userId) {
+            post.deleteOne()
         }
 
         return post
     }
 
-    async likeAndUnlikePost(postId, data){
-        const post = await Post.findById({_id: postId})
+    async likeAndUnlikePost(postId, data) {
+        const post = await Post.findById({ _id: postId })
 
-        if(!post.likes.includes(data.userId)){
-            await post.updateOne({ $push: { likes: data.userId }})
-        }else{
-            await post.updateOne({ $pull: { likes: data.userId}})
+        if (!post.likes.includes(data.userId)) {
+            await post.updateOne({ $push: { likes: data.userId } })
+        } else {
+            await post.updateOne({ $pull: { likes: data.userId } })
         }
 
         return post
     }
 
-    async getPost(postId){
-        const post = await Post.findById({_id: postId})
+    async getPost(postId) {
+        const post = await Post.findById({ _id: postId })
 
-        if(!post) throw new CustomError('Post not available')
+        if (!post) throw new CustomError('Post not available')
 
         return post
     }
 
-    async timelinePost(userId){
-        const currentUser = await User.findById({_id: userId})
+    async timelinePost(userId) {
+        const currentUser = await User.findById({ _id: userId })
         const userPost = await Post.find({ userId: currentUser._id })
         const friendsPost = await Promise.all(
             currentUser.followings.map((friendId) => {
@@ -72,11 +72,11 @@ class PostServices {
     }
 
     // get users all post
-    async getProfile(username){
-        const user = await User.findOne({username: username})
-        if(!user) throw new CustomError('User profile does not exist')
-        
-        const post = await Post.find({userId: user._id})
+    async getProfile(username) {
+        const user = await User.findOne({ username: username })
+        if (!user) throw new CustomError('User profile does not exist')
+
+        const post = await Post.find({ userId: user._id })
 
         return post
     }

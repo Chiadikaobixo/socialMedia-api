@@ -1,22 +1,20 @@
 const router = require('express').Router()
 const userControllers = require('../controllers/userControllers')
-const { verifyTokenAndAuthorization } = require('../middleware/verifyToken')
 
+router.patch('/users/:userId',  userControllers.updatedUser)
 
-router.patch('/users/:userId', verifyTokenAndAuthorization, userControllers.updatedUser)
+router.delete('/users/:userId', userControllers.deleteUser)
 
-router.delete('/users/:userId', verifyTokenAndAuthorization, userControllers.deleteUser)
+router.get('/', userControllers.getUser)
 
-router.get('/', verifyTokenAndAuthorization, userControllers.getUser)
+router.get('/allusers',  userControllers.getAllUser)
 
-router.get('/allusers', verifyTokenAndAuthorization, userControllers.getAllUser)
+router.get('/friends/:userId',  userControllers.getFriends)
 
-router.get('/friends/:userId', verifyTokenAndAuthorization, userControllers.getFriends)
+router.get('/followers/:userId',  userControllers.getFollowers)
 
-router.get('/followers/:userId', verifyTokenAndAuthorization, userControllers.getFollowers)
+router.put('/users/:userId/follow',  userControllers.followUser)
 
-router.put('/users/:userId/follow', verifyTokenAndAuthorization, userControllers.followUser)
-
-router.put('/users/:userId/unfollow', verifyTokenAndAuthorization, userControllers.unFollowUser)
+router.put('/users/:userId/unfollow',  userControllers.unFollowUser)
 
 module.exports = router

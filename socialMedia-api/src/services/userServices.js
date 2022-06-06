@@ -32,7 +32,7 @@ class UserServices {
         const user = userId
             ? await User.findById(userId)
             : await User.findOne({ username })
-        // if (!user) throw new CustomError('User not found!', 404)
+        if (!user) throw new CustomError('User not found!', 404)
 
         return user
     }

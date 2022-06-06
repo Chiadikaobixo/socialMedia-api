@@ -25,6 +25,6 @@ app.use(logoutRouter)
 app.use(messageRouter)
 app.use(conversationRouter)
 
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
     console.log('backend server is running')
 })

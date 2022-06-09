@@ -5,7 +5,7 @@ router.patch('/users/:userId',  userControllers.updatedUser)
 
 router.delete('/users/:userId', userControllers.deleteUser)
 
-router.get('/', userControllers.getUser)
+router.get('/user', userControllers.getUser)
 
 router.get('/allusers',  userControllers.getAllUser)
 

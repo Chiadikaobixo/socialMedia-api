@@ -11,7 +11,7 @@ const conversationRouter = require('./routers/conversation')
 
 app.use(cors())
 app.use((_req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://chiadimedia.vercel.app');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, PUT')
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     next()

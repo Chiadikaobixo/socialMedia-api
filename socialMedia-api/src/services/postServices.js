@@ -61,6 +61,8 @@ class PostServices {
     async timelinePost(userId) {
         const currentUser = await User.findById({ _id: userId })
         const userPost = await Post.find({ userId: currentUser._id })
+        if(!userPost) throw new CustomError('userId does not exist')
+
         const friendsPost = await Promise.all(
             currentUser.followings.map((friendId) => {
                 return Post.find({ userId: friendId })

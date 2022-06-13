@@ -12,7 +12,7 @@ class AuthServices {
 
         const newUser = new User(data)
 
-        // Generate token
+        //Generate token
         const token = await newUser.generateAuthToken()
 
         const savedUser = await newUser.save()

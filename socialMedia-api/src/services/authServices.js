@@ -4,28 +4,31 @@ const CryptoJS = require('crypto-js')
 
 
 class AuthServices {
-    async signUp(data){
-        let user = await User.findOne({username: data.username })
-        let userEmail = await User.findOne({email: data.email })
-        if (user) throw new CustomError('username already exist!')
-        if (userEmail) throw new CustomError('Email already exist!')
+    async signUp(data) {
+        try {
+            await User.findOne({ username: data.username })
+            await User.findOne({ email: data.email })
+            
+            const newUser = new User(data)
 
-        const newUser = new User(data)
+            //Generate token
+            const token = await newUser.generateAuthToken()
 
-        //Generate token
-        const token = await newUser.generateAuthToken()
+            const savedUser = await newUser.save()
 
-        const savedUser = await newUser.save()
+            return { savedUser, token }
+        } catch (error) {
+            throw new CustomError('username or email already exist!')
 
-        return {savedUser, token}
+        }
     }
 
-    async loginUser(data){
+    async loginUser(data) {
         if (!data.email) throw new CustomError("email is required!");
         if (!data.password) throw new CustomError("Password is required!");
-    
+
         // check if user exist
-        const login = await User.findOne({email: data.email})
+        const login = await User.findOne({ email: data.email })
         if (!login) throw new CustomError('Incorrect username or password!')
 
         // Check if password is correct
@@ -36,7 +39,7 @@ class AuthServices {
         // Generate token
         const token = await login.generateAuthToken()
 
-        return {login, token}
+        return { login, token }
     }
 }
 

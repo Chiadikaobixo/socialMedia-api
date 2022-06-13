@@ -5,7 +5,7 @@ const CryptoJS = require('crypto-js')
 
 class AuthServices {
     async signUp(data){
-        let user = await User.findOne({ username: data.username })
+        let user = await User.findOne({ username: data.username, email: data.email })
         if (user) throw new CustomError('Username already exist!')
 
         const newUser = new User(data)

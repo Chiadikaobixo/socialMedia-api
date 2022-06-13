@@ -32,7 +32,7 @@ class UserServices {
         const user = userId
             ? await User.findById(userId)
             : await User.findOne({ username })
-        // if (!user) throw new CustomError('User not found!', 404)
+        if (!user) throw new CustomError('User not found!', 404)
 
         return user
     }
@@ -50,6 +50,7 @@ class UserServices {
 
     async getFriends(userId) {
         const user = await User.findById(userId)
+        if (!user) throw new CustomError('userId does not exist')
         const friends = await Promise.all(
             user.followings.map((friendId) => {
                 return User.findById(friendId)
@@ -66,6 +67,7 @@ class UserServices {
 
     async getFollowers(userId) {
         const user = await User.findById(userId)
+        if (!user) throw new CustomError('userId does not exist')
         const followers = await Promise.all(
             user.followers.map((followerId) => {
                 return User.findById(followerId)
@@ -82,6 +84,7 @@ class UserServices {
 
     async followUser(userId, data) {
         const user = await User.findById({ _id: userId })
+        if (!user) throw new CustomError('userId does not exist')
         const currentUser = await User.findById(data.userId)
 
         if (userId === data.userId)
@@ -99,6 +102,7 @@ class UserServices {
 
     async unFollowUser(userId, data) {
         const user = await User.findById({ _id: userId })
+        if (!user) throw new CustomError('userId does not exist')
         const currentUser = await User.findById(data.userId)
 
         if (userId === data.userId)

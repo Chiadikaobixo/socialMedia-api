@@ -5,12 +5,11 @@ const CryptoJS = require('crypto-js')
 
 class AuthServices {
     async signUp(data) {
-        try {
             let user = await User.findOne({ username: data.username })
             let userEmail = await User.findOne({ email: data.email })
             if (user) throw new CustomError('username or email already exist!')
             if (userEmail) throw new CustomError('username or email already exist!')
-
+            
             const newUser = new User(data)
 
             //Generate token
@@ -19,9 +18,6 @@ class AuthServices {
             const savedUser = await newUser.save()
 
             return { savedUser, token }
-        } catch (error) {
-
-        }
     }
 
     async loginUser(data) {

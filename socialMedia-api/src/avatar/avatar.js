@@ -4,7 +4,7 @@ const multer = require('multer')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "https://chiadi-socialmedia-api.herokuapp.com/public/assets" );
+        cb(null, "public/assets" );
     },
     filename: (req, file, cb) => {
         cb(null, req.body.name);
